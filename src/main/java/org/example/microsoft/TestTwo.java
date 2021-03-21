@@ -9,9 +9,15 @@ public class TestTwo {
 
 
     public static void main(String[] args) {
-        solution("011100");
+        int res = solution2("011100");
+        System.out.println(res);
     }
 
+    /**
+     * 这个思路是错的：转成十进制再除法、减法
+     * @param S
+     * @return
+     */
     public static int solution(String S) {
         // write your code in Java SE 8
         if (S == null || S.length() == 0){
@@ -49,5 +55,37 @@ public class TestTwo {
             }
         }
         return modCount;
+    }
+
+    /**
+     * 作为二进制操作，从右边开始，0就右移一位，1就置0+右移
+     * @param S
+     * @return
+     */
+    public static int solution2(String S){
+        // write your code in Java SE 8
+        if (S == null || S.length() == 0){
+            return 0;
+        }
+        int leftOneIndex = 0;
+        for (; leftOneIndex < S.length(); leftOneIndex++){
+            if (S.charAt(leftOneIndex) == '1'){
+                break;
+            }
+        }
+        if (leftOneIndex == S.length()){
+            return 0;
+        }
+        int rightIndex = S.length() - 1;
+        int totalTimes = 0;
+        for (; rightIndex > leftOneIndex; rightIndex--){
+            if (S.charAt(rightIndex) == '0'){
+                totalTimes += 1;
+            }else {
+                totalTimes += 2;
+            }
+        }
+        totalTimes++;
+        return totalTimes;
     }
 }
